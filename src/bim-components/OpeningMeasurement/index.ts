@@ -4,7 +4,17 @@ import * as THREE from "three";
 
 export class OpeningMeasurement extends OBC.Component {
   static uuid = "11a42ddf-a099-485f-a913-2134cfc259bd" as const;
-  enabled = true;
+
+  private _enabled: boolean = false;
+  set enabled(value: boolean) {
+    this._enabled = value;
+    const highlighter = this.components.get(OBF.Highlighter);
+    highlighter.enabled = !value;
+  }
+
+  get enabled() {
+    return this._enabled;
+  }
 
   // We need to keep track of the world because the preview geometry
   // needs to be added to the scene to be displayed, and when the world is
@@ -76,6 +86,7 @@ export class OpeningMeasurement extends OBC.Component {
 
   measure() {
     // We cannot perform a measurement without an edge so we return the function.
+    if (!this.enabled) return;
     if (!this.edge) return;
     const edge = this.edge;
     // We need to know the direction of the edge because the algorithm

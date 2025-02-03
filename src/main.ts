@@ -135,6 +135,8 @@ const openingMeasurement = components.get(OpeningMeasurement);
 // so it can properly display the preview geometry within the scene.
 openingMeasurement.world = world;
 
+openingMeasurement.enabled = true;
+
 // We obtain the raycaster associated with the current world.
 // The raycaster will be used to detect the objects we are hovering and clicking on.
 const raycaster = components.get(OBC.Raycasters).get(world);
